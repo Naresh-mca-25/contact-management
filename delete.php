@@ -1,0 +1,39 @@
+<?php
+
+include "database.php";
+
+
+if (isset($_GET["id"])) {
+
+    $id = intval($_GET["id"]);
+
+
+    $stmt = mysqli_prepare(
+        $conn,
+        "DELETE FROM contacts WHERE id=?"
+    );
+
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "i",
+        $id
+    );
+
+
+    mysqli_stmt_execute($stmt);
+
+
+    mysqli_stmt_close($stmt);
+
+}
+
+
+mysqli_close($conn);
+
+
+header("Location: view.php");
+
+exit();
+
+?>

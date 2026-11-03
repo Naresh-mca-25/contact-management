@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Contact</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 5px;
+            margin-bottom: 8px;
+            min-height: 20px;
+        }
+
+        .input-error {
+            border: 2px solid red !important;
+            outline: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>Contact Management System</h1>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="add.html">Add Contact</a>
+        <a href="view.php">View Contacts</a>
+    </nav>
+
+</header>
+
+
+<div class="form-container">
+
+    <h2>Add Contact</h2>
+
+
+    <form action="add.php"
+          method="POST"
+          id="contactForm"
+          novalidate>
+
+
+        <!-- NAME -->
+
+        <label for="name">
+            Name
+        </label>
+
+        <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter name"
+            maxlength="100"
+            autocomplete="off"
+        >
+
+        <div id="nameError" class="error-message"></div>
+
+
+        <!-- MOBILE -->
+
+        <label for="phone">
+            Mobile Number
+        </label>
+
+        <input
+            type="text"
+            id="phone"
+            name="phone"
+            placeholder="Enter 10 digit mobile number"
+            maxlength="10"
+            autocomplete="off"
+            inputmode="numeric"
+        >
+
+        <div id="phoneError" class="error-message"></div>
+
+
+        <!-- EMAIL -->
+
+        <label for="email">
+            Email
+        </label>
+
+        <input
+            type="text"
+            id="email"
+            name="email"
+            placeholder="Enter email"
+            maxlength="100"
+            autocomplete="off"
+        >
+
+        <div id="emailError" class="error-message"></div>
+
+
+        <!-- ADDRESS -->
+
+        <label for="address">
+            Address
+        </label>
+
+        <input
+            type="text"
+            id="address"
+            name="address"
+            placeholder="Enter address"
+            maxlength="200"
+        >
+
+        <div id="addressError" class="error-message"></div>
+
+
+        <button type="submit">
+            Add Contact
+        </button>
+
+    </form>
+
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("contactForm");
+
+    const phone = document.getElementById("phone");
+
+    const phoneError = document.getElementById("phoneError");
+
+
+    /* MOBILE NUMBER */
+
+    phone.addEventListener("input", function () {
+
+        // Numbers mattum allow
+        phone.value = phone.value.replace(/[^0-9]/g, "");
+
+        // Maximum 10 digits
+        phone.value = phone.value.substring(0, 10);
+
+        const value = phone.value;
+
+
+        if (value.length === 0) {
+
+            phoneError.textContent = "";
+
+            phone.classList.remove("input-error");
+
+        }
+
+        else if (!/^[6-9][0-9]{9}$/.test(value)) {
+
+            phoneError.textContent =
+                "(Please enter a valid mobile number)";
+
+            phone.classList.add("input-error");
+
+        }
+
+        else {
+
+            phoneError.textContent = "";
+
+            phone.classList.remove("input-error");
+
+        }
+
+    });
+
+
+    /* FORM SUBMIT */
+
+    form.addEventListener("submit", function (event) {
+
+        const value = phone.value.trim();
+
+
+        if (!/^[6-9][0-9]{9}$/.test(value)) {
+
+            event.preventDefault();
+
+            phoneError.textContent =
+                "(Please enter a valid mobile number)";
+
+            phone.classList.add("input-error");
+
+            phone.focus();
+
+            return false;
+        }
+
+    });
+
+});
+
+</script>
+
+
+</body>
+
+</html>
